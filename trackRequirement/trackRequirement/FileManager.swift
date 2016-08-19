@@ -10,15 +10,15 @@ import Foundation
 
 enum FilesDirectory : String {
 	case STORIES = "stories"
+	case CRITERIA = "criteria"
 }
 
 
 class FileManager: NSObject {
 
 	static func getPathInDirectory(directoryName:FilesDirectory)-> String{
-//		var path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-		var path = ""
-		path.appendContentsOf("\(directoryName)")
+		var path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
+		path.appendContentsOf("/requirements/\(directoryName)")
 		
 		return path
 	}
@@ -27,14 +27,14 @@ class FileManager: NSObject {
 		
 		let fileDirectory = getPathInDirectory(directory)
 		
-//		var name = ""
-		// verify if file exist
-//		if isFileExist(fileName+".plist",inDirectory: directory) == true {
-//			let copyNumber = countFilesWithName(fileName: fileName,inDirectory: directory) - 1
-//			name = fileName+"_copy_"+String(copyNumber)
-//		}else{
-//			name = fileName
-//		}
+		var name = ""
+//		 verify if file exist
+		if isFileExist(fileName+".plist",inDirectory: directory) == true {
+			let copyNumber = countFilesWithName(fileName: fileName,inDirectory: directory) - 1
+			name = fileName+"_copy_"+String(copyNumber)
+		}else{
+			name = fileName
+		}
 		
 		do{
 			try NSFileManager.defaultManager().createDirectoryAtPath(fileDirectory, withIntermediateDirectories: false, attributes: nil)
@@ -43,7 +43,7 @@ class FileManager: NSObject {
 			
 		}
 		
-		let path = fileDirectory.stringByAppendingString("/"+fileName+".plist")
+		let path = fileDirectory.stringByAppendingString("/"+name+".plist")
 		
 		print("Saving plist in: " + path)
 		
@@ -54,71 +54,67 @@ class FileManager: NSObject {
 		}
 	}
 	
-	static func loadFile(fileName filename:String, directory:FilesDirectory) -> NSDictionary{
-		let directory = getPathInDirectory(directory)
-		let path = directory.stringByAppendingString("/"+filename+".plist")
-		let save = NSDictionary(contentsOfFile: path)
-		
-		return save!
-	}
-	
-	
-	static func removeFile(fileName fileName:String,directory:FilesDirectory){
-		
-		let fileManager = NSFileManager.defaultManager()
-		
-		let directory = getPathInDirectory(directory)
-		
-		let filePath = directory.stringByAppendingString("/"+fileName)
-		
-		print("Delete file: "+filePath)
-		
-		if fileManager.fileExistsAtPath(filePath) {
-			do {
-				try fileManager.removeItemAtPath(filePath)
-				//			let removedSuccessFullyAlert = UIAlertView(title: "Congratulations!", message: "Successfully removed file", delegate: self, cancelButtonTitle: "OK")
-				print("File deleted with success!");
-			}catch {
-				print("Could not delete file: "+filePath)
-			}
-			
-		}
-		
-	}
-	
-	static internal func editFileName(oldFileName oldFileName:String, newFileName:String, inDirectory directory:FilesDirectory){
-		do {
-			let documentDirectory = NSURL(fileURLWithPath: getPathInDirectory(directory))
-			let originPath = documentDirectory.URLByAppendingPathComponent("/\(oldFileName)")
-			let destinationPath = documentDirectory.URLByAppendingPathComponent("/\(newFileName)")
-			try NSFileManager.defaultManager().moveItemAtURL(originPath, toURL: destinationPath)
-		} catch let error as NSError {
-			print(error)
-		}
-	}
-	
-	// File Manager Util
-//	static func countFilesWithName(fileName fileName:String, inDirectory directory:FilesDirectory)->Int{
+//	static func loadFile(fileName filename:String, directory:FilesDirectory) -> NSDictionary{
+//		let directory = getPathInDirectory(directory)
+//		let path = directory.stringByAppendingString("/"+filename+".plist")
+//		let save = NSDictionary(contentsOfFile: path)
 //		
-//		
-//		var filesName : [String]!
-//		
-//		if directory == .GRAPH_DIRECTORY {
-//			filesName = retriveAllFilesName(inDirectory: .GRAPH_DIRECTORY)
-//		}else if directory == .EXERCISE_DIRECTORY {
-//			filesName = retriveAllFilesName(inDirectory: .EXERCISE_DIRECTORY)
-//		}
-//		
-//		var count = 0
-//		
-//		for name in filesName {
-//			if name.containsString(fileName) {
-//				count += 1
-//			}
-//		}
-//		
-//		return count
+//		return save!
 //	}
+//	
+//	
+//	static func removeFile(fileName fileName:String,directory:FilesDirectory){
+//		
+//		let fileManager = NSFileManager.defaultManager()
+//		
+//		let directory = getPathInDirectory(directory)
+//		
+//		let filePath = directory.stringByAppendingString("/"+fileName)
+//		
+//		print("Delete file: "+filePath)
+//		
+//		if fileManager.fileExistsAtPath(filePath) {
+//			do {
+//				try fileManager.removeItemAtPath(filePath)
+//				//			let removedSuccessFullyAlert = UIAlertView(title: "Congratulations!", message: "Successfully removed file", delegate: self, cancelButtonTitle: "OK")
+//				print("File deleted with success!");
+//			}catch {
+//				print("Could not delete file: "+filePath)
+//			}
+//			
+//		}
+//		
+//	}
+//	
+//	static internal func editFileName(oldFileName oldFileName:String, newFileName:String, inDirectory directory:FilesDirectory){
+//		do {
+//			let documentDirectory = NSURL(fileURLWithPath: getPathInDirectory(directory))
+//			let originPath = documentDirectory.URLByAppendingPathComponent("/\(oldFileName)")
+//			let destinationPath = documentDirectory.URLByAppendingPathComponent("/\(newFileName)")
+//			try NSFileManager.defaultManager().moveItemAtURL(originPath, toURL: destinationPath)
+//		} catch let error as NSError {
+//			print(error)
+//		}
+//	}
+//	
+	// File Manager Util
+	static func countFilesWithName(fileName fileName:String, inDirectory directory:FilesDirectory)->Int{
+		
+		
+		var filesName : [String]!
+
+		filesName = retriveAllFilesName(inDirectory: directory)
+		
+		var count = 0
+		
+		for name in filesName {
+			if name.containsString(fileName) {
+				count += 1
+			}
+		}
+		
+		return count
+	}
 	
 	static func retriveAllFilesName(inDirectory directory:FilesDirectory) -> [String]{
 		
@@ -152,11 +148,11 @@ class FileManager: NSObject {
 		return fileManager.fileExistsAtPath(filePath)
 	}
 	
-	static func removeExtension(extens extens:String, inout from fileName:String){
-		fileName = fileName.stringByReplacingOccurrencesOfString("."+extens, withString: "")
-	}
-	
-	static func addExtension(extens extens:String, inout of fileName:String){
-		fileName = fileName.stringByAppendingString("."+extens)
-	}
+//	static func removeExtension(extens extens:String, inout from fileName:String){
+//		fileName = fileName.stringByReplacingOccurrencesOfString("."+extens, withString: "")
+//	}
+//	
+//	static func addExtension(extens extens:String, inout of fileName:String){
+//		fileName = fileName.stringByAppendingString("."+extens)
+//	}
 }
