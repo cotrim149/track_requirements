@@ -8,8 +8,31 @@
 
 import Foundation
 
-print("Hello, World!")
 
-let story = UserStory(ID: 1, title: "Estória teste", story: "Eu como um desenvolvedor ...")
 
-UserStoryController().saveUserStory(story)
+while(true){
+	
+	print("1 - Cadastrar Estória")
+	print("2 - Carregar Estória")
+	
+	let option = Int(readLine(stripNewline: true)!)
+	
+	switch option?.littleEndian {
+	case 1?:
+		let story = UserStory(ID: 1, title: "Estória teste", story: "Eu como um desenvolvedor ...")
+		UserStoryController().saveUserStory(story)
+		break
+	case 2?:
+		let story = UserStoryController().loadUserStory(fileName: "story1")
+		print(story.ID)
+		print(story.title)
+		print(story.story)
+		break
+	default:
+		print("Not is a choose")
+	}
+	
+}
+
+
+

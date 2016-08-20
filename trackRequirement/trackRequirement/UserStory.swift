@@ -14,6 +14,13 @@ class UserStory: NSObject {
 	var title:String!
 	var story:String!
 	
+	override init() {
+		super.init()
+		self.ID = Int()
+		self.title = String()
+		self.story = String()
+	}
+	
 	init(ID:Int, title:String, story:String){
 		self.ID = ID
 		self.title = title

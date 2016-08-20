@@ -18,7 +18,7 @@ class FileManager: NSObject {
 
 	static func getPathInDirectory(directoryName:FilesDirectory)-> String{
 		var path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-		path.appendContentsOf("/requirements/\(directoryName)")
+		path.appendContentsOf("/\(directoryName)")
 		
 		return path
 	}
@@ -54,14 +54,14 @@ class FileManager: NSObject {
 		}
 	}
 	
-//	static func loadFile(fileName filename:String, directory:FilesDirectory) -> NSDictionary{
-//		let directory = getPathInDirectory(directory)
-//		let path = directory.stringByAppendingString("/"+filename+".plist")
-//		let save = NSDictionary(contentsOfFile: path)
-//		
-//		return save!
-//	}
-//	
+	static func loadFile(fileName filename:String, directory:FilesDirectory) -> NSDictionary{
+		let directory = getPathInDirectory(directory)
+		let path = directory.stringByAppendingString("/"+filename+".plist")
+		let save = NSDictionary(contentsOfFile: path)
+		
+		return save!
+	}
+//
 //	
 //	static func removeFile(fileName fileName:String,directory:FilesDirectory){
 //		

@@ -21,4 +21,16 @@ class UserStoryController : NSObject {
 		FileManager.saveFile(fileName: "story1", withData: dict, inDirectory: .STORIES)
 	}
 	
+	func loadUserStory(fileName fileName:String)->UserStory{
+		let dict = FileManager.loadFile(fileName: fileName, directory: .STORIES)
+		
+		let userStory = UserStory()
+		
+		userStory.ID = dict.valueForKey("id") as! Int
+		userStory.title = dict.valueForKey("title") as! String
+		userStory.story = dict.valueForKey("story") as! String
+		
+		return userStory
+	}
+	
 }
