@@ -61,31 +61,29 @@ class FileManager: NSObject {
 		
 		return save!
 	}
-//
-//	
-//	static func removeFile(fileName fileName:String,directory:FilesDirectory){
-//		
-//		let fileManager = NSFileManager.defaultManager()
-//		
-//		let directory = getPathInDirectory(directory)
-//		
-//		let filePath = directory.stringByAppendingString("/"+fileName)
-//		
-//		print("Delete file: "+filePath)
-//		
-//		if fileManager.fileExistsAtPath(filePath) {
-//			do {
-//				try fileManager.removeItemAtPath(filePath)
-//				//			let removedSuccessFullyAlert = UIAlertView(title: "Congratulations!", message: "Successfully removed file", delegate: self, cancelButtonTitle: "OK")
-//				print("File deleted with success!");
-//			}catch {
-//				print("Could not delete file: "+filePath)
-//			}
-//			
-//		}
-//		
-//	}
-//	
+	
+	static func removeFile(fileName fileName:String,directory:FilesDirectory){
+		
+		let fileManager = NSFileManager.defaultManager()
+		
+		let directory = getPathInDirectory(directory)
+		
+		let filePath = directory.stringByAppendingString("/"+fileName+".plist")
+		
+		print("Delete file: "+filePath)
+		
+		if fileManager.fileExistsAtPath(filePath) {
+			do {
+				try fileManager.removeItemAtPath(filePath)
+				print("File deleted with success!");
+			}catch {
+				print("Could not delete file: "+filePath)
+			}
+			
+		}
+		
+	}
+
 //	static internal func editFileName(oldFileName oldFileName:String, newFileName:String, inDirectory directory:FilesDirectory){
 //		do {
 //			let documentDirectory = NSURL(fileURLWithPath: getPathInDirectory(directory))

@@ -33,4 +33,8 @@ class UserStoryController : NSObject {
 		return userStory
 	}
 	
+	func deleteUserStory(fileName fileName:String){
+		FileManager.removeFile(fileName: fileName, directory: .STORIES)
+	}
+	
 }

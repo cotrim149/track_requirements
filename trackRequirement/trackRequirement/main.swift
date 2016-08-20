@@ -14,6 +14,7 @@ while(true){
 	
 	print("1 - Cadastrar Estória")
 	print("2 - Carregar Estória")
+	print("3 - Apagar Estória")
 	
 	let option = Int(readLine(stripNewline: true)!)
 	
@@ -27,6 +28,9 @@ while(true){
 		print(story.ID)
 		print(story.title)
 		print(story.story)
+		break
+	case 3?:
+		UserStoryController().deleteUserStory(fileName: "story1")
 		break
 	default:
 		print("Not is a choose")
