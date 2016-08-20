@@ -10,37 +10,37 @@ import Foundation
 
 enum FilesDirectory : String {
 	case STORIES = "stories"
-	case CRITERIA = "criteria"
 }
 
 
 class FileManager: NSObject {
 
-	static func getPathInDirectory(directoryName:FilesDirectory)-> String{
+	static func getPathInDirectory(directoryNamed:FilesDirectory,projectName: String)-> String{
 		var path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as String
-		path.appendContentsOf("/\(directoryName)")
+		path.appendContentsOf("/track_requirements/\(projectName)/\(directoryNamed)")
 		
 		return path
 	}
 	
-	static func saveFile(fileName fileName:String, withData data:NSMutableDictionary, inDirectory directory:FilesDirectory){
+	static func saveFile(fileName fileName:String, ofProject projectName:String, withData data:NSMutableDictionary, inDirectory directory:FilesDirectory){
 		
-		let fileDirectory = getPathInDirectory(directory)
+		
+		let fileDirectory = getPathInDirectory(directory,projectName: projectName)
 		
 		var name = ""
 //		 verify if file exist
-		if isFileExist(fileName+".plist",inDirectory: directory) == true {
-			let copyNumber = countFilesWithName(fileName: fileName,inDirectory: directory) - 1
+		if isFileExist(fileName+".plist", inProject: projectName,inDirectory: directory) == true {
+			let copyNumber = countFilesWithName(fileName: fileName,inProject: projectName,inDirectory: directory) - 1
 			name = fileName+"_copy_"+String(copyNumber)
 		}else{
 			name = fileName
 		}
 		
 		do{
-			try NSFileManager.defaultManager().createDirectoryAtPath(fileDirectory, withIntermediateDirectories: false, attributes: nil)
+			try NSFileManager.defaultManager().createDirectoryAtPath(fileDirectory, withIntermediateDirectories: true, attributes: nil)
 			
 		}catch {
-			
+			print("Directory not created")
 		}
 		
 		let path = fileDirectory.stringByAppendingString("/"+name+".plist")
@@ -54,19 +54,19 @@ class FileManager: NSObject {
 		}
 	}
 	
-	static func loadFile(fileName filename:String, directory:FilesDirectory) -> NSDictionary{
-		let directory = getPathInDirectory(directory)
+	static func loadFile(fileName filename:String, inProject projectName:String, directory:FilesDirectory) -> NSDictionary{
+		let directory = getPathInDirectory(directory,projectName: projectName)
 		let path = directory.stringByAppendingString("/"+filename+".plist")
 		let save = NSDictionary(contentsOfFile: path)
 		
 		return save!
 	}
 	
-	static func removeFile(fileName fileName:String,directory:FilesDirectory){
+	static func removeFile(fileName fileName:String, inProject projectName:String ,directory:FilesDirectory){
 		
 		let fileManager = NSFileManager.defaultManager()
 		
-		let directory = getPathInDirectory(directory)
+		let directory = getPathInDirectory(directory,projectName: projectName)
 		
 		let filePath = directory.stringByAppendingString("/"+fileName+".plist")
 		
@@ -96,12 +96,12 @@ class FileManager: NSObject {
 //	}
 //	
 	// File Manager Util
-	static func countFilesWithName(fileName fileName:String, inDirectory directory:FilesDirectory)->Int{
+	static func countFilesWithName(fileName fileName:String, inProject projectName:String, inDirectory directory:FilesDirectory)->Int{
 		
 		
 		var filesName : [String]!
 
-		filesName = retriveAllFilesName(inDirectory: directory)
+		filesName = retriveAllFilesName(ofProject: projectName,inDirectory: directory)
 		
 		var count = 0
 		
@@ -114,9 +114,9 @@ class FileManager: NSObject {
 		return count
 	}
 	
-	static func retriveAllFilesName(inDirectory directory:FilesDirectory) -> [String]{
+	static func retriveAllFilesName(ofProject projectName:String,inDirectory directory:FilesDirectory) -> [String]{
 		
-		let directory = getPathInDirectory(directory)
+		let directory = getPathInDirectory(directory,projectName: projectName)
 		
 		var directoryContents : [String]!
 		
@@ -124,9 +124,9 @@ class FileManager: NSObject {
 			directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtPath(directory)
 		}catch {
 			print("Retrive contents fail")
-			
+			// create directory
 			do {
-				try NSFileManager.defaultManager().createDirectoryAtPath(directory, withIntermediateDirectories: false, attributes: nil)
+				try NSFileManager.defaultManager().createDirectoryAtPath(directory, withIntermediateDirectories: true, attributes: nil)
 			}catch {
 				print("Directory not created!")
 			}
@@ -138,9 +138,20 @@ class FileManager: NSObject {
 	}
 	
 	
-	static func isFileExist(fileName:String, inDirectory directory:FilesDirectory)->Bool{
+//	static func createFolder(folderName folderName:String, inDirectory directory:String){
+//		
+//		
+//		do {
+//			try NSFileManager.defaultManager().createDirectoryAtPath(directory, withIntermediateDirectories: false, attributes: nil)
+//		}catch {
+//			print("Directory not created!")
+//		}
+//		
+//	}
+	
+	static func isFileExist(fileName:String, inProject projectName:String ,inDirectory directory:FilesDirectory)->Bool{
 		let fileManager = NSFileManager.defaultManager()
-		let documentsPath = getPathInDirectory(directory)
+		let documentsPath = getPathInDirectory(directory,projectName: projectName)
 		let filePath = documentsPath.stringByAppendingString("/"+fileName)
 		
 		return fileManager.fileExistsAtPath(filePath)

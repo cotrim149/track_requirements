@@ -11,6 +11,8 @@
 		9FA0902D1D66B40500B031F0 /* UserStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0902C1D66B40500B031F0 /* UserStory.swift */; };
 		9FA0902F1D66B62500B031F0 /* UserStoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA0902E1D66B62500B031F0 /* UserStoryController.swift */; };
 		9FA090311D66B86100B031F0 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA090301D66B86100B031F0 /* FileManager.swift */; };
+		9FA090331D67E44500B031F0 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA090321D67E44400B031F0 /* Project.swift */; };
+		9FA090351D68807100B031F0 /* ProjectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FA090341D68807100B031F0 /* ProjectController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +33,8 @@
 		9FA0902C1D66B40500B031F0 /* UserStory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStory.swift; sourceTree = "<group>"; };
 		9FA0902E1D66B62500B031F0 /* UserStoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStoryController.swift; sourceTree = "<group>"; };
 		9FA090301D66B86100B031F0 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		9FA090321D67E44400B031F0 /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		9FA090341D68807100B031F0 /* ProjectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				9FA0902C1D66B40500B031F0 /* UserStory.swift */,
+				9FA090321D67E44400B031F0 /* Project.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -83,6 +88,7 @@
 			children = (
 				9FA0902E1D66B62500B031F0 /* UserStoryController.swift */,
 				9FA090301D66B86100B031F0 /* FileManager.swift */,
+				9FA090341D68807100B031F0 /* ProjectController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -147,7 +153,9 @@
 				9FA0902D1D66B40500B031F0 /* UserStory.swift in Sources */,
 				9FA0902F1D66B62500B031F0 /* UserStoryController.swift in Sources */,
 				9FA090241D66B30B00B031F0 /* main.swift in Sources */,
+				9FA090331D67E44500B031F0 /* Project.swift in Sources */,
 				9FA090311D66B86100B031F0 /* FileManager.swift in Sources */,
+				9FA090351D68807100B031F0 /* ProjectController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

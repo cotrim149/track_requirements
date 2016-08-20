@@ -10,19 +10,18 @@ import Foundation
 
 class UserStoryController : NSObject {
 	
-	
-	func saveUserStory(userStory:UserStory){
+	func saveUserStory(userStory:UserStory, ofProject projectName:String){
 				
 		let dict = NSMutableDictionary()
 		dict.setValue(userStory.ID, forKey: "id")
 		dict.setValue(userStory.title, forKey: "title")
 		dict.setValue(userStory.story, forKey: "story")
 		
-		FileManager.saveFile(fileName: "story1", withData: dict, inDirectory: .STORIES)
+		FileManager.saveFile(fileName: "story1",ofProject:projectName, withData: dict, inDirectory: .STORIES)
 	}
 	
-	func loadUserStory(fileName fileName:String)->UserStory{
-		let dict = FileManager.loadFile(fileName: fileName, directory: .STORIES)
+	func loadUserStory(fileName fileName:String, ofProject projectName:String)->UserStory{
+		let dict = FileManager.loadFile(fileName: fileName, inProject: projectName,directory: .STORIES)
 		
 		let userStory = UserStory()
 		
@@ -33,8 +32,8 @@ class UserStoryController : NSObject {
 		return userStory
 	}
 	
-	func deleteUserStory(fileName fileName:String){
-		FileManager.removeFile(fileName: fileName, directory: .STORIES)
+	func deleteUserStory(fileName fileName:String, ofProject projectName:String){
+		FileManager.removeFile(fileName: fileName, inProject: projectName,directory: .STORIES)
 	}
 	
 }

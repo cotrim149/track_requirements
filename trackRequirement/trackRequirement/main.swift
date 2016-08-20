@@ -18,19 +18,23 @@ while(true){
 	
 	let option = Int(readLine(stripNewline: true)!)
 	
+	
+	let project = Project()
+	project.name = "Projeto_teste"
+	
 	switch option?.littleEndian {
 	case 1?:
 		let story = UserStory(ID: 1, title: "Estória teste", story: "Eu como um desenvolvedor ...")
-		UserStoryController().saveUserStory(story)
+		UserStoryController().saveUserStory(story,ofProject: project.name)
 		break
 	case 2?:
-		let story = UserStoryController().loadUserStory(fileName: "story1")
+		let story = UserStoryController().loadUserStory(fileName: "story1",ofProject: project.name)
 		print(story.ID)
 		print(story.title)
 		print(story.story)
 		break
 	case 3?:
-		UserStoryController().deleteUserStory(fileName: "story1")
+		UserStoryController().deleteUserStory(fileName: "story1",ofProject: project.name)
 		break
 	default:
 		print("Not is a choose")
